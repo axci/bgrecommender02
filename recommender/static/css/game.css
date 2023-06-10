@@ -1,0 +1,20 @@
+.game-details {
+    display: flex;
+    
+}
+
+.image-container {
+    flex: 0 0 50%;
+}
+
+.game-image {
+    max-width: 600px;
+    max-height: 600px;
+    margin-top: 60px;
+    margin-left: 20px;
+}
+
+.info-container {
+    margin-top: 60px;
+    flex: 0 0 50%;
+}

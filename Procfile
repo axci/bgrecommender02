@@ -1,0 +1,1 @@
+web: gunicorn bgrecommender.wsgi --log-file -

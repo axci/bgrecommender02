@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category.title }}</title>
+</head>
+
+<style>
+    .game-table {
+        border-collapse: collapse;
+    }
+
+    .game-table th,
+    .game-table td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+    }
+
+    .game-table img {
+        max-width: 50px;
+        max-height: 50px;
+    }
+</style>
+
+<body>
+    <a href="{% url 'recommender:game_list' %}">Home</a>
+    <h1>{{ category.title }}</h1>
+    
+    <table class="game-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Image</th>
+                <th>Title</th>                
+                <th>Year</th>
+                <th>Geek Rating</th>
+                <th>Average Rating</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for game in games %}
+                {% with forloop.counter as game_number %}
+                <tr>
+                    <td>{{ game_number }}</td>
+                    <td><img src="{{ game.image_url }}" alt="{{ game.title }}"></td>
+                    <td>{{ game.title }}</td>
+                    
+                    <td>{{ game.year }}</td>
+                    <td>{{ game.rating_geek }}</td>
+                    <td>{{ game.rating_avg }}</td>
+                </tr>
+                {% endwith %}
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+

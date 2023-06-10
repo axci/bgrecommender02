@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Fonts -->
+    <!-- Awesome Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;500;600;700;800&family=Josefin+Slab:ital,wght@0,400;0,600;1,300;1,400;1,600&family=Muli:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- End of Fonts -->
+
+    <title>Boardgame Recommender</title>
+</head>
+
+<body>
+    <div class="container">
+        
+        
+        <!-- Navbar -->
+        <nav class="navbar center sticky">
+            <a href="{% url 'recommender:game_list' %}" class="navbar-link">Home</a>
+            {% for gametype in gametypes %}
+                <a href="{% url 'recommender:gametype_view' gametype.id %}" class="navbar-link">{{ gametype.title }}</a>
+            {% endfor %}
+
+        </nav>
+        <!-- End of Navbar -->
+
+        <!-- Section 1: Rec Games -->
+        <section class="section-3" id="section-3">
+            <form method="GET" action="{% url 'recommender:game_list' %}">
+                <div class="section-heading">Enter your username from <a href="https://boardgamegeek.com/">bgg</a>:  {{ form.username }}</div>
+                <p style="font-size: 18px;">Only for users who rated at least 7 games</p>
+                <p style="font-size: 18px;">The recommendations are only for the games published since 2015 </p>
+                <button style="font-size: 18px;">Submit</button>
+                <div>{{ error_message }}</div>
+                
+            </form>
+            
+            <h1 class="section-heading">Your Recommendations</h1>
+            <div class="projects-wrapper center">
+                {% for game in recommended_games %}
+                <a href="{% url 'recommender:game_detail' game.id %}" class="project center" target="_blank">
+                    <div class="project-text">
+                        
+                    </div>
+                    <img src="{{ game.image_url }}" alt="{{ game.title }}" class="project-img" style="width: 200px; height: 200px;">
+                </a>
+                {% endfor %}                
+            </div>
+        </section>    
+        <!-- End of Section 1 -->
+
+        <!-- Section 4: Contact -->
+        <section class="section-4" id="section-4">
+            <h1 class="section-4-heading section-heading">Contact Me</h1>
+            <form class="contact-form center">
+                <input type="text" placeholder="Name">
+                <input type="email" placeholder="Email">
+                <textarea placeholder="Message"></textarea>
+                <input type="submit" value="Submit" class="contact-form-btn">
+            </form>
+        </section>
+        <!-- End of Section 4 -->
+
+        <!-- Section 5: Footer -->
+        <footer class="section-5 center">
+            <div class="social-media">
+                <a href="#none" class="social-media-link"><i class="fab fa-github-square"></i></a>
+                <a href="#none" class="social-media-link"><i class="fab fa-youtube"></i></a>
+                <a href="#none" class="social-media-link"><i class="fab fa-twitter-square"></i></a>
+            </div>
+            <p class="copyright">
+                Copyright &copy; Maxim Kolbasov. All Rights Reserved.
+            </p>
+        </footer>
+        <!-- End of Section 5 -->
+    </div>
+
+    
+</body>
+
+
+
+</html>

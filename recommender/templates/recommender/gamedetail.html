@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="{% static 'css/game.css' %}">
+    
+    <!-- Fonts -->
+    <!-- Awesome Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;500;600;700;800&family=Josefin+Slab:ital,wght@0,400;0,600;1,300;1,400;1,600&family=Muli:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- End of Fonts -->
+
+    <title>{{ game.title }}</title>
+</head>
+
+<body>
+   
+    
+    <section class="game-details">
+        <div class="image-container">
+            <img src="{{ game.image_url }}" alt="{{ game.title }}" class="game-image">
+        </div>
+        <div class="info-container">
+            <a href="{% url 'recommender:game_list' %}">Home</a>
+            <h1>{{ game.title }}</h1>
+            <h2>{{ game.year }}</h2>
+            <h2>Type:</h2>
+            {% for gametype in game.gametype.all %}
+                <a href="{% url 'recommender:gametype_view' gametype.id %}">{{ gametype.title }}</a>
+                
+            {% endfor %}
+            <h2>Category:</h2>
+            {% for cat in game.category.all %}
+                <div><a href="{% url 'recommender:category_view' cat.id %}">{{ cat }}</a></div>
+            {% endfor %}
+            <h2>Mechanic:</h2>
+            {% for mech in game.mechanic.all %}
+                <div><a href="{% url 'recommender:mechanic_view' mech.id %}">{{ mech }}</a></div>
+            {% endfor %}
+        </div>
+    </section>
+    
+    
+    
+
+    
+</body>
+</html>
+
