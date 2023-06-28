@@ -1,19 +1,38 @@
 from django.shortcuts import render, get_object_or_404
+from django.core.mail import send_mail  # for sending email message
 from .models import Game, GameType, User, Category, Mechanic
-from .forms import UserForm
+from .forms import UserForm, EmailForm
 
 
 def game_list(request):
     games = Game.objects.all()  # all games
     gametypes = GameType.objects.all()
     
-    username = request.GET.get('username')  # from index.html form
+    # Sending a message to my email
+    sent = False 
+    if request.method == 'POST':
+        # Form was submitted
+        form_email = EmailForm(request.POST)
+        if form_email.is_valid():
+            # Form fields passed validation
+            cd = form_email.cleaned_data
+            subject = f"A message from {cd['name']} from mysite"
+            message = f"{cd['name']} {cd['email']}\n\n{cd['message']}"
+            send_mail(subject, message, 'm.kolbasov@gmail.com',
+                      ['m.kolbasov@gmail.com'])
+            sent = True
+    else:
+        form_email = EmailForm()
+
     context = {
         'games': games,
         'gametypes': gametypes,
+        'sent': sent,
+        'form_email': form_email,
         'form': UserForm(),
     }
 
+    username = request.GET.get('username')  # from index.html form
     if username:
         try:
             user = User.objects.get(name=username)  # get above user from User model

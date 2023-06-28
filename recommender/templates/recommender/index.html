@@ -42,7 +42,7 @@
                 <div class="section-heading">Enter your username from <a href="https://boardgamegeek.com/">bgg</a>:  {{ form.username }}</div>
                 <p style="font-size: 18px;">Only for users who rated at least 7 games</p>
                 <p style="font-size: 18px;">The recommendations are only for the games published since 2015 </p>
-                <button style="font-size: 18px;">Submit</button>
+                <input type="submit" value="Submit" class="contact-form-btn">
                 <div>{{ error_message }}</div>
                 
             </form>
@@ -64,21 +64,27 @@
         <!-- Section 4: Contact -->
         <section class="section-4" id="section-4">
             <h1 class="section-4-heading section-heading">Contact Me</h1>
-            <form class="contact-form center">
-                <input type="text" placeholder="Name">
-                <input type="email" placeholder="Email">
-                <textarea placeholder="Message"></textarea>
-                <input type="submit" value="Submit" class="contact-form-btn">
-            </form>
+            {% if sent %}
+                <h1 class="section-4-heading section-heading">E-mail was successfully sent</h1>
+            {% else %}
+                <form class="contact-form center" method="post">
+                    {% csrf_token %}
+                    {{ form_email.name }}
+                    {{ form_email.email }}
+                    {{ form_email.message }}
+                    <input type="submit" value="Submit" class="contact-form-btn">
+                </form>
+            {% endif %}
+            
         </section>
         <!-- End of Section 4 -->
 
         <!-- Section 5: Footer -->
         <footer class="section-5 center">
             <div class="social-media">
-                <a href="#none" class="social-media-link"><i class="fab fa-github-square"></i></a>
-                <a href="#none" class="social-media-link"><i class="fab fa-youtube"></i></a>
-                <a href="#none" class="social-media-link"><i class="fab fa-twitter-square"></i></a>
+                <a href="https://github.com/axci?tab=repositories" class="social-media-link"><i class="fab fa-github-square"></i></a>
+                <!--<a href="#none" class="social-media-link"><i class="fab fa-youtube"></i></a>-->
+                <a href="https://twitter.com/maxim_kolbasov" class="social-media-link"><i class="fab fa-twitter-square"></i></a>
             </div>
             <p class="copyright">
                 Copyright &copy; Maxim Kolbasov. All Rights Reserved.
@@ -89,7 +95,5 @@
 
     
 </body>
-
-
 
 </html>
